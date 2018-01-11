@@ -28,6 +28,7 @@ Trick question! `Cake` is an opinionated structure, spec, and some modules. We r
 # OSX setup
 # mmake: https://github.com/tj/mmake/releases (get binary for your system, drop it somewhere in your path /usr/local/bin/mmake for example)
 # alias make="mmake"
+# alias cake="mmake" if you like cake
 
 brew install yq
 ```
