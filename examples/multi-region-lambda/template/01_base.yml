@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SNS Stack Inventory System <DATE>
+
+Parameters:
+
+Resources:
+  InventoryTopic:
+    Type: "AWS::SNS::Topic"
+    Properties:
+      TopicName: stack-inventory
+
+Outputs:
+  InventoryTopicArn:
+    Description: Created InventoryTopic ARN
+    Value:
+      Ref: InventoryTopic

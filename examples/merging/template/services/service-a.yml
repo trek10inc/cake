@@ -1,0 +1,9 @@
+Parameters:
+  ServiceA:
+    Description: Parameter for service A
+    Type: String
+    Default: ServiceA
+
+Resources:
+  CakeTopic:
+    Type: AWS::S3::Bucket

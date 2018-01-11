@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: A minimal Cake template
+
+Parameters:
+  This:
+    Description: Is a thing
+    Type: String
+    Default: That will pass
+
+Resources:
+  CakeTopic:
+    Type: "AWS::SNS::Topic"
+
+Outputs:
+  CakeTopicArn:
+    Description: Created Cake topic Arn
+    Value: !Ref CakeTopic

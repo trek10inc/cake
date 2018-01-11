@@ -1,0 +1,51 @@
+# We only want this to deploy on a single region
+# we picked us-east-2 because reasons
+Conditions:
+  DeployRegistrationService:
+    Fn::Equals:
+      - Ref: AWS::Region
+      - us-east-2
+
+Resources:
+  LambdaExecutionRole:
+    Condition: DeployRegistrationService
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      Policies:
+      - PolicyName: root
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:*
+            Resource: arn:aws:logs:*:*:*
+
+  StackRegistrationFunction:
+    Condition: DeployRegistrationService
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: handler
+      Runtime: python3.6
+      Code: ../src
+      Role:
+        Fn::GetAtt: LambdaExecutionRole.Arn
+      Timeout: 10
+      MemorySize: 1024
+
+Outputs:
+  RegistrationServiceArn:
+    Condition: DeployRegistrationService
+    Description: Lambda function all SNS topics should publish to
+    Value:
+      Fn::GetAtt: StackRegistrationFunction.Arn

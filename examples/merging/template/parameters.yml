@@ -1,0 +1,5 @@
+Parameters:
+  GlobalParam:
+    Description: Param that everything may use
+    Type: String
+    Default: GLOBAL
