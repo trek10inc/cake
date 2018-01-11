@@ -32,6 +32,26 @@ Trick question! `Cake` is an opinionated structure, spec, and some modules. We r
 brew install yq
 ```
 
+# Using
+
+The quickest way to get started is to check some examples...
+In any `cake` enabled project you can always run `cake help` to see what is available to you, including all commands in recursively included `pieces`.
+
+For example, the `github.com/trek10inc/cake/pieces/basic/default.mk` include, with `cake help` will show the following.
+
+```
+➜ cake help
+  clean                removes any build and packaging artifacts
+  compile              compiles the template by merging all .yml files
+  deploy               Simple deploy or update (args: region=)
+  deploy-all-regions   Quickly deploy to a list of regions defined in cake.yml
+  pre-transform        pre-ransform pipeline
+  validate             compiles and validates the template
+  watch                watches all files, rebuilds, and validates on change
+```
+
+`cake help -v` will expose more verbose details.
+
 # Local Development
 
 Clone the repository, the simplest thing to do to make dev easy, and compatible with `mmake` github includes, is to run the below command while in the root of the repository. `mmake` will not go fetch those files then, it will see the includes as already existing locally!

@@ -3,11 +3,10 @@ STACK_NAME := $(shell yq r cake.yml stack)
 
 build: clean pre-transform compile
 
-
-# removes .build directory
+# removes any build and packaging artifacts
 clean:
 	@echo "INFO: cleaning old artificts"
-	@rm -rf .build
+	@rm -rf .build .packaged
 .PHONY: clean
 
 include github.com/trek10inc/cake/pieces/compile/default.mk

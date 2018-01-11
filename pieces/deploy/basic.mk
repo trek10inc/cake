@@ -6,7 +6,7 @@ deploy-basic: check-create-deployment-bucket
 	@mkdir -p .packaged
 	@aws cloudformation package --region $(region) \
 			 --s3-bucket $(AWS_ACCOUNT)-cloudformation-packages-$(region) \
-			 --s3-prefix sns-inventory-system \
+			 --s3-prefix $(STACK_NAME) \
 			 --template-file .build/template.yml \
 			 --output-template-file .packaged/template.yml; \
 	if aws cloudformation describe-stacks --stack-name $(STACK_NAME) --region $(region) > /dev/null 2>&1; \
@@ -32,7 +32,6 @@ deploy-basic: check-create-deployment-bucket
 	  fi \
 	fi
 
-# Check or create deployment buckets
 check-create-deployment-bucket:
 	@if aws s3 ls s3://$(AWS_ACCOUNT)-cloudformation-packages-$(region); \
 	then \
