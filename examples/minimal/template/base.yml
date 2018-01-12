@@ -3,7 +3,7 @@ Description: A minimal Cake template
 
 Parameters:
   This:
-    Description: Is a thing
+    Description: Is a thing (change)
     Type: String
     Default: That will pass
 

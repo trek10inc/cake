@@ -5,7 +5,7 @@ build: clean pre-transform compile
 
 # removes any build and packaging artifacts
 clean:
-	@echo "INFO: cleaning old artificts"
+	@echo "INFO: cleaning old artifacts"
 	@rm -rf .build .packaged
 .PHONY: clean
 
@@ -14,8 +14,12 @@ include github.com/trek10inc/cake/pieces/compile/default.mk
 # compiles and validates the template
 validate: build
 	@echo "INFO: validating built template"
-	@aws cloudformation validate-template --template-body file:///$$PWD/.build/template.yml
-	@echo "INFO: template is valid"
+	@if aws cloudformation validate-template --template-body file:///$$PWD/.build/template.yml > /dev/null;\
+	then \
+		echo "INFO: template is valid"; \
+	else \
+		echo "ERROR: template is not valid"; \
+	fi
 
 # watches all files, rebuilds, and validates on change
 watch:
@@ -37,3 +41,7 @@ include github.com/trek10inc/cake/pieces/pre-transforms/header.mk
 # Simple deploy or update (args: region=)
 deploy: deploy-basic
 include github.com/trek10inc/cake/pieces/deploy/basic.mk
+
+# Delete a stack, any stack (args: region=)
+destroy: destroy-basic
+include github.com/trek10inc/cake/pieces/destroy/basic.mk

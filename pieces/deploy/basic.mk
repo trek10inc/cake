@@ -8,32 +8,26 @@ deploy-basic: check-create-deployment-bucket
 			 --s3-bucket $(AWS_ACCOUNT)-cloudformation-packages-$(region) \
 			 --s3-prefix $(STACK_NAME) \
 			 --template-file .build/template.yml \
-			 --output-template-file .packaged/template.yml; \
+			 --output-template-file .packaged/template.yml > /dev/null; \
 	if aws cloudformation describe-stacks --stack-name $(STACK_NAME) --region $(region) > /dev/null 2>&1; \
 	then \
 	  echo "INFO: stack found $(region).$(STACK_NAME)"; \
 	  echo "INFO: stack updating $(region).$(STACK_NAME)"; \
-		if aws cloudformation deploy --stack-name $(STACK_NAME) --template-file .packaged/template.yml --region $(region) --capabilities CAPABILITY_IAM; \
-	  then \
-			aws cloudformation wait stack-update-complete --stack-name $(STACK_NAME) --region $(region); \
-			echo "INFO: update success $(region).$(STACK_NAME)"; \
-	  else \
-			echo "ERROR: failed to update $(region).$(STACK_NAME)"; \
-	  fi \
+		aws cloudformation deploy --stack-name $(STACK_NAME) --template-file .packaged/template.yml --region $(region) --capabilities CAPABILITY_IAM |\
+		while read line; do \
+			echo "INFO: $$line"; \
+		done \
 	else \
 	  echo "INFO: stack not found $(region).$(STACK_NAME)"; \
 	  echo "INFO: stack creating $(region).$(STACK_NAME)"; \
-		if aws cloudformation deploy --stack-name $(STACK_NAME) --template-file .packaged/template.yml --region $(region) --capabilities CAPABILITY_IAM; \
-	  then \
-			aws cloudformation wait stack-create-complete --stack-name $(STACK_NAME) --region $(region); \
-			echo "INFO: create success $(region).$(STACK_NAME)"; \
-	  else \
-			echo "ERROR: failed to create $(region).$(STACK_NAME)"; \
-	  fi \
+		aws cloudformation deploy --stack-name $(STACK_NAME) --template-file .packaged/template.yml --region $(region) --capabilities CAPABILITY_IAM |\
+		while read line; do \
+			echo "INFO: $$line"; \
+		done \
 	fi
 
 check-create-deployment-bucket:
-	@if aws s3 ls s3://$(AWS_ACCOUNT)-cloudformation-packages-$(region); \
+	@if aws s3 ls s3://$(AWS_ACCOUNT)-cloudformation-packages-$(region) > /dev/null 2>&1; \
 	then \
 		echo "INFO: cloudformation-package bucket found"; \
 	else \
