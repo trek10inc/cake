@@ -1,5 +1,3 @@
-stack: multi-region-lambda-sns
-
 regions:
   - us-east-2
   - us-east-1

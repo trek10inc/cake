@@ -1,4 +1,6 @@
 # Multi-Region Lambda (Conditional Deployments)
+STACK_NAME="multi-region"
+REGION="us-east-2"
 
 include github.com/trek10inc/cake/pieces/basic/default.mk
 

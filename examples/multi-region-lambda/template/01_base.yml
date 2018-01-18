@@ -2,12 +2,14 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: SNS Stack Inventory System <DATE>
 
 Parameters:
+  TopicName:
+    Type: String
 
 Resources:
   InventoryTopic:
-    Type: "AWS::SNS::Topic"
+    Type: "AWS::SNS::Topic2"
     Properties:
-      TopicName: stack-inventory
+      TopicName: {Ref: TopicName}
 
 Outputs:
   InventoryTopicArn:

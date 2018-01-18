@@ -1,6 +1,6 @@
 CAKE := mmake
-STACK_NAME := $(shell yq r cake.yml stack)
 
+# Build the template
 build: clean pre-transform compile
 
 # removes any build and packaging artifacts
