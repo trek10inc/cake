@@ -5,7 +5,7 @@ compile:
 	@mkdir -p .build
 	@COUNT=$$(find template -name \*.yml 2>/dev/null | wc -l | tr -d '[:space:]'); \
 	echo "INFO: compiling $$COUNT files in templates"; \
-	if [ $$COUNT == "1" ]; \
+	if [ $$COUNT = "1" ]; \
 	then \
 		yq r template/*.yml >> .build/template.yml; \
 	else \
