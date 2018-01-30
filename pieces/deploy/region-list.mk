@@ -1,7 +1,8 @@
 # Deploy to all regions in cake.yml
 
 deploy-region-list:
-	@yq r $$(PWD)/cake.yml regions |\
+	@yq r cake.yml regions |\
 	while read line; do \
-		$(CAKE) deploy REGION=$${line:2}; \
+		APP_REGION=$$(echo $$line | cut -c 3-); \
+		$(CAKE) deploy REGION=$$APP_REGION; \
 	done

@@ -1,7 +1,8 @@
 # Destroy to all regions in cake.yml
 
 destroy-region-list:
-	@yq r $$(PWD)/cake.yml regions |\
+	@yq r cake.yml regions |\
 	while read line; do \
-		$(CAKE) destroy region=$${line:2}; \
+		APP_REGION=$$(echo $$line | cut -c 3-); \
+		$(CAKE) destroy REGION=$$APP_REGION; \
 	done
